@@ -1,0 +1,195 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node{
+    
+    Node* head=NULL;
+    Node* tail=NULL;
+    int data;
+    Node* prev;
+    Node* next;
+    
+    public:
+        Node(){
+            this->data=0;
+            this->prev=NULL;
+            this->next=NULL;
+        }
+        
+        Node(int d){
+            this->data=d;
+            this->prev=NULL;
+            this->next=NULL;
+        }
+            
+    void InsertAtBeg(int d){
+        Node* t=new Node(d);
+        if(head==NULL){
+            head=t;
+            tail=t;
+        }else{
+            head->prev=t;
+            t->next=head;
+            head=t;
+        }
+        return;
+    }
+    
+    void InsertAtEnd(int d){
+        Node* t=new Node(d);
+        
+        if(head==NULL){
+            head=t;
+            tail=t;
+        }else{
+            t->prev=tail;
+            tail->next=t;
+            tail=t;
+        }
+        return;
+    }
+    
+    void showtail(){
+        cout<<tail->data<<" "<<tail->prev->data;
+        cout<<endl;
+    }
+    
+    void forwardTraverse(){
+        if(head==NULL){
+            cout<<"No data in list\n";
+        }else{
+            Node* t=head;
+            while(t!=NULL){
+                cout<<t->data<<" ";
+                t=t->next;
+            }
+            cout<<endl;
+        }
+    }
+    
+    void reverseTraverse(){
+        if(head==NULL){
+            cout<<"No data present in List\n";
+            return;
+        }else{
+            Node* t=tail;
+            while(t!=NULL){
+                cout<<t->data<<" ";
+                t=t->prev;
+            }
+            cout<<endl;
+        }
+    }
+    
+    int length(){
+        int c=0;
+        Node* t=head;
+        while(t!=NULL){
+            c++;
+            t=t->next;
+        }
+        return c;
+    }
+    
+    string search(int d){
+        Node* start=head;
+        Node* end=tail;
+        int l=length();
+        while(l/2>0){
+            if(start->data==d)
+            return "present";
+            if(end->data==d)
+            return "present";
+            l-=2;
+            start=start->next;
+            end=end->prev;
+        }
+        if(start->data==d || end->data==d){
+            return "present";
+        }
+        return "Not present";
+        
+    }
+    
+    int index(int d){
+        Node* start=head;
+        Node* end=tail;
+        int a,b;
+        int l=length();
+        a=0;
+        b=l-1;
+        
+        while(a<b){
+            if(start->data!=d){
+                a++;
+            }else if(start->data==d){
+                return a;
+            }
+            if(end->data!=d){
+                b--;
+            }else if(end->data==d){
+                return b;
+            }
+            start=start->next;
+            end=end->prev;
+        }
+        
+        if(start->data==d){
+            return a;
+        }
+        else
+        return -1;
+        
+    }
+    
+    void Delete(int d){
+        Node* start=head;
+        Node* end=tail;
+        int a=0,b=length()-1;
+        while(a<b){
+            
+            if(start->data==d){
+                Node* t=start;
+                start->prev->next=start->next;
+                delete t;
+                return;
+            }
+            
+            if(end->data==d){
+                Node* t=end;
+                end->prev->next=end->next;
+                return;
+            }
+            
+            a++;
+            b--;
+            start=start->next;
+            end=end->prev;
+        }
+    }
+};
+
+int main(){
+    Node* obj=new Node();
+    int arr[]={1,2,5,8,3,0};
+    for(auto a:arr){
+        obj->InsertAtEnd(a);
+    }
+    
+    cout<<"\nBefore : ";
+    obj->forwardTraverse();
+    // obj->reverseTraverse();
+    // obj->showtail();
+    // cout<<obj->length();
+    // cout<<obj->search(5);
+    // cout<<obj->index(5);
+    obj->Delete(8);
+    cout<<"\nAfter : ";
+    obj->forwardTraverse();
+    
+    
+    return 0;
+    
+    
+    
+}
