@@ -1,3 +1,4 @@
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -93,7 +94,42 @@ class Node{
         }
     }
     
-    void deleteAtPos(Node** head,int pos){
+    void deleteElement(Node** head,int d){
+        if(*head==NULL){
+            return;
+        }
+        Node* curr=*head;
+        Node* prev=NULL;
+        
+        while(curr->data!=d){
+            if(curr->next==*head){
+                cout<<"\n Given element is not present";
+                return;
+            }
+            prev=curr;
+            curr=curr->next;
+        }
+        
+        if(curr->next==*head && prev==NULL){
+            *head=NULL;
+            free(curr);
+            return;
+        }else if(curr==*head){
+            prev=curr->prev;
+            *head=(*head)->next;
+            prev->next=*head;
+            (*head)->prev=prev;
+            free(curr);
+        }else if(curr->next==*head){
+            prev->next=*head;
+            (*head)->prev=prev;
+            free(curr);
+        }else{
+            Node* temp=curr->next;
+            prev->next=temp;
+            temp->prev=prev;
+            free(curr);
+        }
         
     }
 };
@@ -108,7 +144,8 @@ int main(){
     
     obj->Show(head);
     cout<<endl;
-    obj->deleteAtBeg(&head);
+    // obj->deleteAtBeg(&head);
+    obj->deleteElement(&head,6);
     obj->Show(head);
     
     // Search & index
