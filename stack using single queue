@@ -1,0 +1,39 @@
+// implementation of stack
+
+#include<iostream>
+#include<queue>
+#include<bits/stdc++.h>
+using namespace std;
+
+
+void show(queue<int>q){
+    while(!q.empty()){
+        cout<<q.front();
+        q.pop();
+    }cout<<endl;
+}
+
+void stackIm(queue<int>& q, int val){
+     int s=q.size();
+   q.push(val);
+  
+   for(int i=0;i<s;i++){
+       q.push(q.front());
+       q.pop();
+   }
+}
+
+
+int main(){
+    queue<int> q1,q2;
+    int arr[]={3,6,1,5,9,0,8,7};
+    for(int a:arr){
+        stackIm(q1,a);
+    }
+    // stackIm(q1);
+    // cout<<"-------------\n";
+    show(q1);
+    
+    
+    return 0;
+}
